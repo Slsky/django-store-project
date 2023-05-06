@@ -11,22 +11,50 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import environ
+
+
+env = environ.Env(
+    DEBUG=(bool),
+    SECRET_KEY=(str),
+
+    DOMAIN_NAME=(str),
+
+    REDIS_HOST=(str),
+    REDIS_PORT=(int),
+
+    DATABASE_NAME=(str),
+    DATABASE_USER=(str),
+    DATABASE_PASSWORD=(str),
+    DATABASE_HOST=(str),
+    DATABASE_PORT=(str),
+
+    EMAIL_HOST=(str),
+    EMAIL_PORT=(int),
+    EMAIL_HOST_USER=(str),
+    EMAIL_HOST_PASSWORD=(str),
+    EMAIL_USER_SSL=(bool),
+
+    STRIPE_PUBLIC_KEY=(str),
+    STRIPE_SECRET_KEY=(str),
+    STRIPE_WEBHOOK_SECRET=(str),
+)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+environ.Env.read_env(BASE_DIR / '.env')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-fg%p#g*g2c$q3-%sak5td&9bsstlcuhavn%wzpd&qa559t2_m%'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -76,11 +104,11 @@ WSGI_APPLICATION = 'app.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "store_db",
-        "USER": "postgres",
-        "PASSWORD": "postgress",
-        "HOST": "localhost",
-        "PORT": "5433",
+        "NAME": env('DATABASE_NAME'),
+        "USER": env('DATABASE_USER'),
+        "PASSWORD": env('DATABASE_PASSWORD'),
+        "HOST": env('DATABASE_HOST'),
+        "PORT": env('DATABASE_PORT'),
     }
 }
 
