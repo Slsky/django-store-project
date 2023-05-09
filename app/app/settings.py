@@ -38,6 +38,8 @@ env = environ.Env(
     STRIPE_PUBLIC_KEY=(str),
     STRIPE_SECRET_KEY=(str),
     STRIPE_WEBHOOK_SECRET=(str),
+
+    NPM_BIN_PATH=(str),
 )
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -67,6 +69,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'django_extensions',
+    'tailwind',
+    'theme',
+    'django_browser_reload',
 ]
 
 MIDDLEWARE = [
@@ -77,9 +82,17 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
 
 ROOT_URLCONF = 'app.urls'
+
+TAILWIND_APP_NAME = 'theme'
+NPM_BIN_PATH = env('NPM_BIN_PATH')
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
 
 TEMPLATES = [
     {
